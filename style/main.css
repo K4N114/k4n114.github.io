@@ -1,10 +1,10 @@
 :root {
   --c-base-black: #0c1e29;
-  --c-base-blacklight: #4e616c;
-  --c-base-purple: #003df0;
+  --c-base-blacklight: #ffb5b5;
+  --c-base-purple: #d26868;
   --c-base-purplelight: #c2ccf2;
-  --c-base-bluelight: hwb(199, 1%, 4%);
-  --c-base-blue: hwb(209, 0%, 35%);
+  --c-base-bluelight: #ffabab;
+  --c-base-blue: #d26868;
   --c-base-green: hwb(123, 40%, 27%);
   --c-base-graylight: hwb(0, 80%, 20%);
   --c-base-gray: hwb(0, 60%, 40%);
@@ -373,7 +373,7 @@ a:active,
 }
 a.purple-link {
   position: relative;
-  background: linear-gradient(180deg, transparent 70%, rgba(101,125,225,0.4) 0);
+  background: linear-gradient(180deg, transparent 70%, rgba(239,195,202,0.4) 0);
 }
 .main {
   max-width: 768px;
@@ -893,14 +893,14 @@ html.dark .post-item .content .post-abstract {
   color: #afafaf;
 }
 html.dark .post-item .post-info {
-  color: #759eff;
+  color: #ff8282;
 }
 html.dark .post-detail .post-title {
   color: #c9d1d9;
 }
 html.dark .post-detail .post-info,
 html.dark .post-detail .post-info a {
-  color: #759eff;
+  color: #ff8282;
 }
 html.dark .post-detail .feature-container {
   box-shadow: none;
