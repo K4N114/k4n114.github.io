@@ -12,17 +12,33 @@
 <title>newPost</title>
 <meta name="keywords" content="newPost, Kani&#39;s Blog">
 <meta name="description" content="这是代码测试
-123456public float f1;void Test()&#123;    Debug.Log(f1);&#125;
+public float f1;
 
-123456789101112highlight:  enable: false  line_n">
+void Test()
+&#123;
+    Debug.Log(f1);
+&#125;
+
+highlight:
+  enable: false
+  line_number: true
+  ">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta property="og:title" content="newPost">
 <meta property="og:description" content="这是代码测试
-123456public float f1;void Test()&#123;    Debug.Log(f1);&#125;
+public float f1;
 
-123456789101112highlight:  enable: false  line_n">
+void Test()
+&#123;
+    Debug.Log(f1);
+&#125;
+
+highlight:
+  enable: false
+  line_number: true
+  ">
 
 <link rel="shortcut icon" href="/images/favicon.ico">
 <link rel="stylesheet" href="/style/main.css">
@@ -100,10 +116,45 @@
       <div class="post-content-wrapper">
         <div class="post-content">
           <p>这是代码测试</p>
-<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="built_in">float</span> f1;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Test</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    Debug.Log(f1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">float</span></span> f1<span class="token punctuation">;</span>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">highlight:</span><br><span class="line">  enable: false</span><br><span class="line">  line_number: true</span><br><span class="line">  auto_detect: false</span><br><span class="line">  tab_replace: &#x27;&#x27;</span><br><span class="line">  wrap: true</span><br><span class="line">  hljs: false</span><br><span class="line">prismjs:</span><br><span class="line">  enable: true</span><br><span class="line">  preprocess: true</span><br><span class="line">  line_number: true</span><br><span class="line">  tab_replace: &#x27;&#x27;</span><br></pre></td></tr></table></figure>
+<span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Test</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    Debug<span class="token punctuation">.</span><span class="token function">Log</span><span class="token punctuation">(</span>f1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<pre class="line-numbers language-none"><code class="language-none">highlight:
+  enable: false
+  line_number: true
+  auto_detect: false
+  tab_replace: &#39;&#39;
+  wrap: true
+  hljs: false
+prismjs:
+  enable: true
+  preprocess: true
+  line_number: true
+  tab_replace: &#39;&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+ 
+<span class="token keyword">import</span> <span class="token string">"fmt"</span>
+ 
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token comment">// 十进制</span>
+	<span class="token keyword">var</span> a <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">10</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%d \n"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span>  <span class="token comment">// 10</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%b \n"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span>  <span class="token comment">// 1010  占位符%b表示二进制</span>
+ 
+	<span class="token comment">// 八进制  以0开头</span>
+	<span class="token keyword">var</span> b <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">077</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%o \n"</span><span class="token punctuation">,</span> b<span class="token punctuation">)</span>  <span class="token comment">// 77</span>
+ 
+	<span class="token comment">// 十六进制  以0x开头</span>
+	<span class="token keyword">var</span> c <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">0xff</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%x \n"</span><span class="token punctuation">,</span> c<span class="token punctuation">)</span>  <span class="token comment">// ff</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%X \n"</span><span class="token punctuation">,</span> c<span class="token punctuation">)</span>  <span class="token comment">// FF</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>引用测试</p>
 </blockquote>

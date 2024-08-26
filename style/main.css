@@ -133,83 +133,9 @@ progress {
 summary {
   display: list-item;
 }
-.hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
-  color: #333;
-  background: #f8f8f8;
-}
-.comment,
-.quote {
-  color: #998;
-  font-style: italic;
-}
-.keyword,
-.selector-tag,
-.subst {
-  color: #333;
-  font-weight: bold;
-}
-.number,
-.literal,
-.variable,
-.template-variable,
-.tag .attr {
-  color: #008080;
-}
-.string,
-.doctag {
-  color: #d14;
-}
-.title,
-.section,
-.selector-id {
-  color: #900;
-  font-weight: bold;
-}
-.subst {
-  font-weight: normal;
-}
-.type,
-.class .title {
-  color: #458;
-  font-weight: bold;
-}
-.tag,
-.name,
-.attribute {
-  color: #000080;
-  font-weight: normal;
-}
-.regexp,
-.link {
-  color: #009926;
-}
-.symbol,
-.bullet {
-  color: #990073;
-}
-.built_in,
-.builtin-name {
-  color: #0086b3;
-}
-.meta {
-  color: #999;
-  font-weight: bold;
-}
-.deletion {
-  background: #fdd;
-}
-.addition {
-  background: #dfd;
-}
-.emphasis {
-  font-style: italic;
-}
-.strong {
-  font-weight: bold;
-}
+/* PrismJS 1.28.0
+https://prismjs.com/download.html#themes=prism-tomorrow&languages=markup+css+clike+javascript */
+code[class*=language-],pre[class*=language-]{color:#ccc;background:0 0;font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;font-size:1em;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto}:not(pre)>code[class*=language-],pre[class*=language-]{background:#2d2d2d}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal}.token.block-comment,.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#999}.token.punctuation{color:#ccc}.token.attr-name,.token.deleted,.token.namespace,.token.tag{color:#e2777a}.token.function-name{color:#6196cc}.token.boolean,.token.function,.token.number{color:#f08d49}.token.class-name,.token.constant,.token.property,.token.symbol{color:#f8c555}.token.atrule,.token.builtin,.token.important,.token.keyword,.token.selector{color:#cc99cd}.token.attr-value,.token.char,.token.regex,.token.string,.token.variable{color:#7ec699}.token.entity,.token.operator,.token.url{color:#67cdcc}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}.token.inserted{color:green}
 .footnote--top {
   position: relative;
   display: inline-block;
@@ -749,7 +675,7 @@ nav {
 .post-content-wrapper {
   display: flex;
 }
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
   .top-box {
     display: none;
   }
@@ -768,7 +694,7 @@ nav {
 #twikoo p {
   margin: revert;
 }
-@media (min-width: 1200px) {
+@media (min-width: 1400px) {
   .top-div {
     box-sizing: border-box;
     margin: 0;
@@ -1057,7 +983,7 @@ html.dark .next-post .post-title {
   color: #c9d1d9;
 }
 html.dark .next-post .purple-link {
-  background: linear-gradient(180deg, transparent 70%, #657de1 0);
+  background: linear-gradient(180deg, transparent 70%, #d26868 0);
 }
 html.dark .pagination-container a,
 html.dark .site-footer a {
