@@ -560,7 +560,8 @@ nav {
 .post-content img {
   display: block;
   box-shadow: 0 0 30px #eee;
-  max-width: 100%;
+  max-width: 80%;
+  max-height: 250px;
   border-radius: 2px;
   margin: 16px auto;
 }
