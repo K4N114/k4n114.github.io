@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ch">
+  <head>
+    
+
+    
+<script>!function(){var e=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,t=localStorage.getItem("use-color-scheme")||"auto";("dark"===t||e&&"light"!==t)&&document.documentElement.classList.toggle("dark",!0)}()</script>
+    
+
+<meta charset="utf-8" >
+
+<title>Blender VertexColor编辑插件</title>
+<meta name="keywords" content="Blender VertexColor编辑插件, Kani&#39;s Blog">
+<meta name="description" content="解决问题在Blender的Edit模式下，没有针对顶点色的便捷选中&#x2F;修改功能。
+使用方法
+进入Edit模式
+选中顶点
+使用Get获取选择的顶点的顶点色&#x2F;手动设置一个顶点色
+点击Apply将顶点色运用到选中的所有顶点上
+
+">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="Blender VertexColor编辑插件">
+<meta property="og:description" content="解决问题在Blender的Edit模式下，没有针对顶点色的便捷选中&#x2F;修改功能。
+使用方法
+进入Edit模式
+选中顶点
+使用Get获取选择的顶点的顶点色&#x2F;手动设置一个顶点色
+点击Apply将顶点色运用到选中的所有顶点上
+
+">
+
+<link rel="shortcut icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="/style/main.css">
+
+  <link rel="stylesheet" href="/style/jquery.fancybox.min.css"><meta name="generator" content="Hexo 7.3.0"></head>
+  <body>
+    <div id="app" class="main">
+
+<div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="http://k4n114.github.io">
+        <img class="avatar" src="/images/avatar.png" alt="logo" width="32px" height="32px">
+      </a>
+      <a href="http://k4n114.github.io">
+        <h1 class="site-title">Kani&#39;s Blog</h1>
+      </a>
+    </div>
+    <div class="right">
+        <i class="icon menu-switch icon-menu-outline" ></i>
+    </div>
+  </div>
+</div>
+
+<div class="menu-container" style="height: 0;opacity: 0;">
+<nav class="menu-list">
+  
+    
+      <a href="/" class="menu purple-link">
+        首页
+      </a>
+    
+  
+    
+      <a href="/tags" class="menu purple-link">
+        标签
+      </a>
+    
+  
+    
+      <a href="/archives" class="menu purple-link">
+        归档
+      </a>
+    
+  
+    
+      <a href="/about" class="menu purple-link">
+        关于
+      </a>
+    
+  
+</nav>
+</div>
+
+
+
+  <div class="content-container">
+    <div class="post-detail">
+      
+      <h2 class="post-title">Blender VertexColor编辑插件</h2>
+      <div class="post-info post-detail-info">
+        <span><i class="icon icon-calendar-outline"></i> 2025-07-21</span>
+        
+          <span>
+          <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="/tags/Blender/">
+              Blender
+                
+              </a>
+            
+          </span>
+        
+      </div>
+      <div class="post-content-wrapper">
+        <div class="post-content">
+          <h1 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h1><p>在Blender的Edit模式下，没有针对顶点色的便捷选中&#x2F;修改功能。</p>
+<h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><ol>
+<li>进入Edit模式</li>
+<li>选中顶点</li>
+<li>使用Get获取选择的顶点的顶点色&#x2F;手动设置一个顶点色</li>
+<li>点击Apply将顶点色运用到选中的所有顶点上</li>
+</ol>
+<p>auto pick color 功能可以自动获取当前选中顶点的顶点色<br><a href="/2025/07/21/BlenderVertexColor%E6%8F%92%E4%BB%B6/image.png" data-fancybox='lightbox' data-caption="alt text"><img   src="/images/loading.svg" data-src="/2025/07/21/BlenderVertexColor%E6%8F%92%E4%BB%B6/image.png"  alt="alt text" lazyload></a></p>
+<p>鼠标右键也可以吸色&#x2F;填色<br><a href="/2025/07/21/BlenderVertexColor%E6%8F%92%E4%BB%B6/QQ_1753106696163.png" data-fancybox='lightbox' data-caption="alt text"><img   src="/images/loading.svg" data-src="/2025/07/21/BlenderVertexColor%E6%8F%92%E4%BB%B6/QQ_1753106696163.png"  alt="alt text" lazyload></a></p>
+<h1 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h1><p><a href="BlenderVertexColor插件/VertexColorEditor.py" download>点击下载 VertexColorEditor.py</a></p>
+<p>你也可以直接复制下面的代码，放到VertexColorEditor.py中，然后使用blender的插件管理器进行导入</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> bpy
+<span class="token keyword">import</span> bmesh
+<span class="token keyword">from</span> bpy<span class="token punctuation">.</span>props <span class="token keyword">import</span> FloatVectorProperty<span class="token punctuation">,</span> BoolProperty
+<span class="token keyword">from</span> bpy<span class="token punctuation">.</span>types <span class="token keyword">import</span> Panel<span class="token punctuation">,</span> Operator<span class="token punctuation">,</span> Menu
+
+bl_info <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">"name"</span><span class="token punctuation">:</span> <span class="token string">"Vertex Color Editor"</span><span class="token punctuation">,</span>
+    <span class="token string">"blender"</span><span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token string">"category"</span><span class="token punctuation">:</span> <span class="token string">"Mesh"</span><span class="token punctuation">,</span>
+    <span class="token string">"version"</span><span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token string">"author"</span><span class="token punctuation">:</span> <span class="token string">"Kani"</span><span class="token punctuation">,</span>
+    <span class="token string">"description"</span><span class="token punctuation">:</span> <span class="token string">"Edit vertex colors with alpha in Edit mode"</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">MESH_OT_apply_vertex_color</span><span class="token punctuation">(</span>Operator<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""应用顶点颜色到选中的顶点"""</span>
+    bl_idname <span class="token operator">=</span> <span class="token string">"mesh.apply_vertex_color"</span>
+    bl_label <span class="token operator">=</span> <span class="token string">"Apply Color to Selected Vertices"</span>
+    bl_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">'REGISTER'</span><span class="token punctuation">,</span> <span class="token string">'UNDO'</span><span class="token punctuation">&#125;</span>
+    
+    <span class="token decorator annotation punctuation">@classmethod</span>
+    <span class="token keyword">def</span> <span class="token function">poll</span><span class="token punctuation">(</span>cls<span class="token punctuation">,</span> context<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>context<span class="token punctuation">.</span>mode <span class="token operator">==</span> <span class="token string">'EDIT_MESH'</span> <span class="token keyword">and</span> 
+                context<span class="token punctuation">.</span>active_object <span class="token keyword">and</span> 
+                context<span class="token punctuation">.</span>active_object<span class="token punctuation">.</span><span class="token builtin">type</span> <span class="token operator">==</span> <span class="token string">'MESH'</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">def</span> <span class="token function">execute</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> context<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        obj <span class="token operator">=</span> context<span class="token punctuation">.</span>active_object
+        props <span class="token operator">=</span> context<span class="token punctuation">.</span>scene<span class="token punctuation">.</span>vertex_color_props
+        
+        <span class="token comment"># 获取bmesh</span>
+        bm <span class="token operator">=</span> bmesh<span class="token punctuation">.</span>from_edit_mesh<span class="token punctuation">(</span>obj<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+        bm<span class="token punctuation">.</span>faces<span class="token punctuation">.</span>ensure_lookup_table<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        bm<span class="token punctuation">.</span>verts<span class="token punctuation">.</span>ensure_lookup_table<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        
+        <span class="token comment"># 确保有顶点颜色层</span>
+        <span class="token keyword">if</span> <span class="token keyword">not</span> bm<span class="token punctuation">.</span>loops<span class="token punctuation">.</span>layers<span class="token punctuation">.</span>color<span class="token punctuation">:</span>
+            bm<span class="token punctuation">.</span>loops<span class="token punctuation">.</span>layers<span class="token punctuation">.</span>color<span class="token punctuation">.</span>new<span class="token punctuation">(</span><span class="token string">"Col"</span><span class="token punctuation">)</span>
+        
+        color_layer <span class="token operator">=</span> bm<span class="token punctuation">.</span>loops<span class="token punctuation">.</span>layers<span class="token punctuation">.</span>color<span class="token punctuation">.</span>active
+        
+        <span class="token comment"># 获取选中的顶点</span>
+        selected_verts <span class="token operator">=</span> <span class="token punctuation">[</span>v <span class="token keyword">for</span> v <span class="token keyword">in</span> bm<span class="token punctuation">.</span>verts <span class="token keyword">if</span> v<span class="token punctuation">.</span>select<span class="token punctuation">]</span>
+        
+        <span class="token keyword">if</span> <span class="token keyword">not</span> selected_verts<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>report<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">'WARNING'</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token string">"没有选中的顶点"</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token punctuation">&#123;</span><span class="token string">'CANCELLED'</span><span class="token punctuation">&#125;</span>
+        
+        <span class="token comment"># 应用颜色到选中顶点的所有loop，包括alpha</span>
+        color_to_apply <span class="token operator">=</span> props<span class="token punctuation">.</span>vertex_color
+        
+        <span class="token keyword">for</span> face <span class="token keyword">in</span> bm<span class="token punctuation">.</span>faces<span class="token punctuation">:</span>
+            <span class="token keyword">for</span> loop <span class="token keyword">in</span> face<span class="token punctuation">.</span>loops<span class="token punctuation">:</span>
+                <span class="token keyword">if</span> loop<span class="token punctuation">.</span>vert<span class="token punctuation">.</span>select<span class="token punctuation">:</span>
+                    loop<span class="token punctuation">[</span>color_layer<span class="token punctuation">]</span> <span class="token operator">=</span> color_to_apply
+        
+        <span class="token comment"># 更新网格</span>
+        bmesh<span class="token punctuation">.</span>update_edit_mesh<span class="token punctuation">(</span>obj<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+        
+        self<span class="token punctuation">.</span>report<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">'INFO'</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token string-interpolation"><span class="token string">f"已应用颜色到 </span><span class="token interpolation"><span class="token punctuation">&#123;</span><span class="token builtin">len</span><span class="token punctuation">(</span>selected_verts<span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string"> 个顶点"</span></span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token punctuation">&#123;</span><span class="token string">'FINISHED'</span><span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">MESH_OT_get_vertex_color</span><span class="token punctuation">(</span>Operator<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""获取选中顶点的颜色"""</span>
+    bl_idname <span class="token operator">=</span> <span class="token string">"mesh.get_vertex_color"</span>
+    bl_label <span class="token operator">=</span> <span class="token string">"Get Color from Selected Vertex"</span>
+    bl_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">'REGISTER'</span><span class="token punctuation">&#125;</span>
+    
+    <span class="token decorator annotation punctuation">@classmethod</span>
+    <span class="token keyword">def</span> <span class="token function">poll</span><span class="token punctuation">(</span>cls<span class="token punctuation">,</span> context<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>context<span class="token punctuation">.</span>mode <span class="token operator">==</span> <span class="token string">'EDIT_MESH'</span> <span class="token keyword">and</span> 
+                context<span class="token punctuation">.</span>active_object <span class="token keyword">and</span> 
+                context<span class="token punctuation">.</span>active_object<span class="token punctuation">.</span><span class="token builtin">type</span> <span class="token operator">==</span> <span class="token string">'MESH'</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">def</span> <span class="token function">execute</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> context<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        obj <span class="token operator">=</span> context<span class="token punctuation">.</span>active_object
+        props <span class="token operator">=</span> context<span class="token punctuation">.</span>scene<span class="token punctuation">.</span>vertex_color_props
+        
+        <span class="token comment"># 获取bmesh</span>
+        bm <span class="token operator">=</span> bmesh<span class="token punctuation">.</span>from_edit_mesh<span class="token punctuation">(</span>obj<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+        bm<span class="token punctuation">.</span>faces<span class="token punctuation">.</span>ensure_lookup_table<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        bm<span class="token punctuation">.</span>verts<span class="token punctuation">.</span>ensure_lookup_table<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        
+        <span class="token comment"># 检查是否有顶点颜色层</span>
+        <span class="token keyword">if</span> <span class="token keyword">not</span> bm<span class="token punctuation">.</span>loops<span class="token punctuation">.</span>layers<span class="token punctuation">.</span>color<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>report<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">'WARNING'</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token string">"网格没有顶点颜色层"</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token punctuation">&#123;</span><span class="token string">'CANCELLED'</span><span class="token punctuation">&#125;</span>
+        
+        color_layer <span class="token operator">=</span> bm<span class="token punctuation">.</span>loops<span class="token punctuation">.</span>layers<span class="token punctuation">.</span>color<span class="token punctuation">.</span>active
+        
+        <span class="token comment"># 获取第一个选中顶点的颜色</span>
+        <span class="token keyword">for</span> face <span class="token keyword">in</span> bm<span class="token punctuation">.</span>faces<span class="token punctuation">:</span>
+            <span class="token keyword">for</span> loop <span class="token keyword">in</span> face<span class="token punctuation">.</span>loops<span class="token punctuation">:</span>
+                <span class="token keyword">if</span> loop<span class="token punctuation">.</span>vert<span class="token punctuation">.</span>select<span class="token punctuation">:</span>
+                    color <span class="token operator">=</span> loop<span class="token punctuation">[</span>color_layer<span class="token punctuation">]</span>
+                    props<span class="token punctuation">.</span>vertex_color <span class="token operator">=</span> <span class="token punctuation">(</span>color<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> color<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> color<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> color<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                    self<span class="token punctuation">.</span>report<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">'INFO'</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token string-interpolation"><span class="token string">f"已获取顶点颜色: RGBA(</span><span class="token interpolation"><span class="token punctuation">&#123;</span>color<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">:</span><span class="token format-spec">.3f</span><span class="token punctuation">&#125;</span></span><span class="token string">, </span><span class="token interpolation"><span class="token punctuation">&#123;</span>color<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">:</span><span class="token format-spec">.3f</span><span class="token punctuation">&#125;</span></span><span class="token string">, </span><span class="token interpolation"><span class="token punctuation">&#123;</span>color<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">:</span><span class="token format-spec">.3f</span><span class="token punctuation">&#125;</span></span><span class="token string">, </span><span class="token interpolation"><span class="token punctuation">&#123;</span>color<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">:</span><span class="token format-spec">.3f</span><span class="token punctuation">&#125;</span></span><span class="token string">)"</span></span><span class="token punctuation">)</span>
+                    <span class="token keyword">return</span> <span class="token punctuation">&#123;</span><span class="token string">'FINISHED'</span><span class="token punctuation">&#125;</span>
+        
+        self<span class="token punctuation">.</span>report<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">'WARNING'</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token string">"没有选中的顶点"</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token punctuation">&#123;</span><span class="token string">'CANCELLED'</span><span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">VertexColorProperties</span><span class="token punctuation">(</span>bpy<span class="token punctuation">.</span>types<span class="token punctuation">.</span>PropertyGroup<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""顶点颜色属性"""</span>
+    vertex_color<span class="token punctuation">:</span> FloatVectorProperty<span class="token punctuation">(</span>
+        name<span class="token operator">=</span><span class="token string">"Vertex Color"</span><span class="token punctuation">,</span>
+        description<span class="token operator">=</span><span class="token string">"顶点颜色(包含Alpha)"</span><span class="token punctuation">,</span>
+        subtype<span class="token operator">=</span><span class="token string">'COLOR'</span><span class="token punctuation">,</span>
+        default<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token builtin">min</span><span class="token operator">=</span><span class="token number">0.0</span><span class="token punctuation">,</span>
+        <span class="token builtin">max</span><span class="token operator">=</span><span class="token number">1.0</span><span class="token punctuation">,</span>
+        size<span class="token operator">=</span><span class="token number">4</span>
+    <span class="token punctuation">)</span>
+    
+    auto_pick_color<span class="token punctuation">:</span> BoolProperty<span class="token punctuation">(</span>
+        name<span class="token operator">=</span><span class="token string">"Auto Pick Color"</span><span class="token punctuation">,</span>
+        description<span class="token operator">=</span><span class="token string">"自动拾取选中顶点的颜色"</span><span class="token punctuation">,</span>
+        default<span class="token operator">=</span><span class="token boolean">False</span>
+    <span class="token punctuation">)</span>
+
+<span class="token keyword">class</span> <span class="token class-name">VIEW3D_PT_vertex_color_panel</span><span class="token punctuation">(</span>Panel<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""顶点颜色编辑面板"""</span>
+    bl_label <span class="token operator">=</span> <span class="token string">"Vertex Color Editor"</span>
+    bl_idname <span class="token operator">=</span> <span class="token string">"VIEW3D_PT_vertex_color"</span>
+    bl_space_type <span class="token operator">=</span> <span class="token string">'VIEW_3D'</span>
+    bl_region_type <span class="token operator">=</span> <span class="token string">'UI'</span>
+    bl_category <span class="token operator">=</span> <span class="token string">"Vertex Color"</span>
+    
+    <span class="token decorator annotation punctuation">@classmethod</span>
+    <span class="token keyword">def</span> <span class="token function">poll</span><span class="token punctuation">(</span>cls<span class="token punctuation">,</span> context<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>context<span class="token punctuation">.</span>mode <span class="token operator">==</span> <span class="token string">'EDIT_MESH'</span> <span class="token keyword">and</span> 
+                context<span class="token punctuation">.</span>active_object <span class="token keyword">and</span> 
+                context<span class="token punctuation">.</span>active_object<span class="token punctuation">.</span><span class="token builtin">type</span> <span class="token operator">==</span> <span class="token string">'MESH'</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">def</span> <span class="token function">draw</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> context<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        layout <span class="token operator">=</span> self<span class="token punctuation">.</span>layout
+        props <span class="token operator">=</span> context<span class="token punctuation">.</span>scene<span class="token punctuation">.</span>vertex_color_props
+        
+        <span class="token comment"># 自动拾取开关</span>
+        layout<span class="token punctuation">.</span>prop<span class="token punctuation">(</span>props<span class="token punctuation">,</span> <span class="token string">"auto_pick_color"</span><span class="token punctuation">,</span> text<span class="token operator">=</span><span class="token string">"Auto Pick Color"</span><span class="token punctuation">)</span>
+        
+        <span class="token comment"># 颜色属性（包含alpha）</span>
+        col <span class="token operator">=</span> layout<span class="token punctuation">.</span>column<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        
+        <span class="token comment"># 使用分离的行来更好地控制布局</span>
+        row <span class="token operator">=</span> col<span class="token punctuation">.</span>row<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        row<span class="token punctuation">.</span>prop<span class="token punctuation">(</span>props<span class="token punctuation">,</span> <span class="token string">"vertex_color"</span><span class="token punctuation">,</span> text<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">)</span>
+        
+        <span class="token comment"># 显示RGBA值</span>
+        color <span class="token operator">=</span> props<span class="token punctuation">.</span>vertex_color
+        col<span class="token punctuation">.</span>separator<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        
+        <span class="token comment"># 显示具体的RGBA数值</span>
+        box <span class="token operator">=</span> col<span class="token punctuation">.</span>box<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        grid <span class="token operator">=</span> box<span class="token punctuation">.</span>grid_flow<span class="token punctuation">(</span>columns<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">,</span> align<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+        grid<span class="token punctuation">.</span>label<span class="token punctuation">(</span>text<span class="token operator">=</span><span class="token string-interpolation"><span class="token string">f"R: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>color<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">:</span><span class="token format-spec">.3f</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        grid<span class="token punctuation">.</span>label<span class="token punctuation">(</span>text<span class="token operator">=</span><span class="token string-interpolation"><span class="token string">f"G: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>color<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">:</span><span class="token format-spec">.3f</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        grid<span class="token punctuation">.</span>label<span class="token punctuation">(</span>text<span class="token operator">=</span><span class="token string-interpolation"><span class="token string">f"B: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>color<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">:</span><span class="token format-spec">.3f</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        grid<span class="token punctuation">.</span>label<span class="token punctuation">(</span>text<span class="token operator">=</span><span class="token string-interpolation"><span class="token string">f"A: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>color<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">:</span><span class="token format-spec">.3f</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        
+        <span class="token comment"># 按钮</span>
+        col<span class="token punctuation">.</span>separator<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment"># 添加图标到按钮</span>
+        row <span class="token operator">=</span> col<span class="token punctuation">.</span>row<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    
+        row<span class="token punctuation">.</span>operator<span class="token punctuation">(</span><span class="token string">"mesh.get_vertex_color"</span><span class="token punctuation">,</span> text<span class="token operator">=</span><span class="token string">"Get"</span><span class="token punctuation">,</span> icon<span class="token operator">=</span><span class="token string">'EYEDROPPER'</span><span class="token punctuation">)</span>
+        row<span class="token punctuation">.</span>operator<span class="token punctuation">(</span><span class="token string">"mesh.apply_vertex_color"</span><span class="token punctuation">,</span> text<span class="token operator">=</span><span class="token string">"Apply"</span><span class="token punctuation">,</span> icon<span class="token operator">=</span><span class="token string">'BRUSH_DATA'</span><span class="token punctuation">)</span>
+        <span class="token comment">#row = col.row()</span>
+
+<span class="token keyword">def</span> <span class="token function">draw_vertex_color_menu</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> context<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""在编辑模式右键菜单中添加顶点颜色选项"""</span>
+    <span class="token keyword">if</span> context<span class="token punctuation">.</span>mode <span class="token operator">==</span> <span class="token string">'EDIT_MESH'</span><span class="token punctuation">:</span>
+        layout <span class="token operator">=</span> self<span class="token punctuation">.</span>layout
+        layout<span class="token punctuation">.</span>separator<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        layout<span class="token punctuation">.</span>operator<span class="token punctuation">(</span><span class="token string">"mesh.get_vertex_color"</span><span class="token punctuation">,</span> text<span class="token operator">=</span><span class="token string">"Pick Vertex Color"</span><span class="token punctuation">,</span> icon<span class="token operator">=</span><span class="token string">'EYEDROPPER'</span><span class="token punctuation">)</span>
+        layout<span class="token punctuation">.</span>operator<span class="token punctuation">(</span><span class="token string">"mesh.apply_vertex_color"</span><span class="token punctuation">,</span> text<span class="token operator">=</span><span class="token string">"Apply Vertex Color"</span><span class="token punctuation">,</span> icon<span class="token operator">=</span><span class="token string">'BRUSH_DATA'</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 自动更新处理器</span>
+<span class="token keyword">def</span> <span class="token function">selection_update_handler</span><span class="token punctuation">(</span>scene<span class="token punctuation">,</span> depsgraph<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""当选择改变时自动获取顶点颜色"""</span>
+    context <span class="token operator">=</span> bpy<span class="token punctuation">.</span>context
+    props <span class="token operator">=</span> scene<span class="token punctuation">.</span>vertex_color_props
+    
+    <span class="token comment"># 检查是否启用了自动拾取</span>
+    <span class="token keyword">if</span> <span class="token keyword">not</span> props<span class="token punctuation">.</span>auto_pick_color<span class="token punctuation">:</span>
+        <span class="token keyword">return</span>
+    
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>context<span class="token punctuation">.</span>mode <span class="token operator">!=</span> <span class="token string">'EDIT_MESH'</span> <span class="token keyword">or</span> 
+        <span class="token keyword">not</span> context<span class="token punctuation">.</span>active_object <span class="token keyword">or</span> 
+        context<span class="token punctuation">.</span>active_object<span class="token punctuation">.</span><span class="token builtin">type</span> <span class="token operator">!=</span> <span class="token string">'MESH'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span>
+    
+    obj <span class="token operator">=</span> context<span class="token punctuation">.</span>active_object
+    
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        <span class="token comment"># 获取bmesh</span>
+        bm <span class="token operator">=</span> bmesh<span class="token punctuation">.</span>from_edit_mesh<span class="token punctuation">(</span>obj<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+        
+        <span class="token comment"># 检查是否有顶点颜色层</span>
+        <span class="token keyword">if</span> <span class="token keyword">not</span> bm<span class="token punctuation">.</span>loops<span class="token punctuation">.</span>layers<span class="token punctuation">.</span>color<span class="token punctuation">:</span>
+            <span class="token keyword">return</span>
+        
+        color_layer <span class="token operator">=</span> bm<span class="token punctuation">.</span>loops<span class="token punctuation">.</span>layers<span class="token punctuation">.</span>color<span class="token punctuation">.</span>active
+        
+        <span class="token comment"># 获取第一个选中顶点的颜色</span>
+        <span class="token keyword">for</span> face <span class="token keyword">in</span> bm<span class="token punctuation">.</span>faces<span class="token punctuation">:</span>
+            <span class="token keyword">for</span> loop <span class="token keyword">in</span> face<span class="token punctuation">.</span>loops<span class="token punctuation">:</span>
+                <span class="token keyword">if</span> loop<span class="token punctuation">.</span>vert<span class="token punctuation">.</span>select<span class="token punctuation">:</span>
+                    color <span class="token operator">=</span> loop<span class="token punctuation">[</span>color_layer<span class="token punctuation">]</span>
+                    <span class="token comment"># 避免递归更新</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">abs</span><span class="token punctuation">(</span>props<span class="token punctuation">.</span>vertex_color<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">-</span> color<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0.001</span> <span class="token keyword">or</span>
+                        <span class="token builtin">abs</span><span class="token punctuation">(</span>props<span class="token punctuation">.</span>vertex_color<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">-</span> color<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0.001</span> <span class="token keyword">or</span>
+                        <span class="token builtin">abs</span><span class="token punctuation">(</span>props<span class="token punctuation">.</span>vertex_color<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">-</span> color<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0.001</span> <span class="token keyword">or</span>
+                        <span class="token builtin">abs</span><span class="token punctuation">(</span>props<span class="token punctuation">.</span>vertex_color<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">-</span> color<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0.001</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                        props<span class="token punctuation">.</span>vertex_color <span class="token operator">=</span> <span class="token punctuation">(</span>color<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> color<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> color<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> color<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                    <span class="token keyword">return</span>
+    <span class="token keyword">except</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+
+classes <span class="token operator">=</span> <span class="token punctuation">(</span>
+    VertexColorProperties<span class="token punctuation">,</span>
+    MESH_OT_apply_vertex_color<span class="token punctuation">,</span>
+    MESH_OT_get_vertex_color<span class="token punctuation">,</span>
+    VIEW3D_PT_vertex_color_panel<span class="token punctuation">,</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">register</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> cls <span class="token keyword">in</span> classes<span class="token punctuation">:</span>
+        bpy<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>register_class<span class="token punctuation">(</span>cls<span class="token punctuation">)</span>
+    
+    bpy<span class="token punctuation">.</span>types<span class="token punctuation">.</span>Scene<span class="token punctuation">.</span>vertex_color_props <span class="token operator">=</span> bpy<span class="token punctuation">.</span>props<span class="token punctuation">.</span>PointerProperty<span class="token punctuation">(</span><span class="token builtin">type</span><span class="token operator">=</span>VertexColorProperties<span class="token punctuation">)</span>
+    
+    <span class="token comment"># 添加右键菜单</span>
+    bpy<span class="token punctuation">.</span>types<span class="token punctuation">.</span>VIEW3D_MT_edit_mesh_context_menu<span class="token punctuation">.</span>append<span class="token punctuation">(</span>draw_vertex_color_menu<span class="token punctuation">)</span>
+    
+    <span class="token comment"># 添加选择更新处理器</span>
+    <span class="token keyword">if</span> selection_update_handler <span class="token keyword">not</span> <span class="token keyword">in</span> bpy<span class="token punctuation">.</span>app<span class="token punctuation">.</span>handlers<span class="token punctuation">.</span>depsgraph_update_post<span class="token punctuation">:</span>
+        bpy<span class="token punctuation">.</span>app<span class="token punctuation">.</span>handlers<span class="token punctuation">.</span>depsgraph_update_post<span class="token punctuation">.</span>append<span class="token punctuation">(</span>selection_update_handler<span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">unregister</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 移除选择更新处理器</span>
+    <span class="token keyword">if</span> selection_update_handler <span class="token keyword">in</span> bpy<span class="token punctuation">.</span>app<span class="token punctuation">.</span>handlers<span class="token punctuation">.</span>depsgraph_update_post<span class="token punctuation">:</span>
+        bpy<span class="token punctuation">.</span>app<span class="token punctuation">.</span>handlers<span class="token punctuation">.</span>depsgraph_update_post<span class="token punctuation">.</span>remove<span class="token punctuation">(</span>selection_update_handler<span class="token punctuation">)</span>
+    
+    <span class="token comment"># 移除右键菜单</span>
+    bpy<span class="token punctuation">.</span>types<span class="token punctuation">.</span>VIEW3D_MT_edit_mesh_context_menu<span class="token punctuation">.</span>remove<span class="token punctuation">(</span>draw_vertex_color_menu<span class="token punctuation">)</span>
+    
+    <span class="token keyword">del</span> bpy<span class="token punctuation">.</span>types<span class="token punctuation">.</span>Scene<span class="token punctuation">.</span>vertex_color_props
+    
+    <span class="token keyword">for</span> cls <span class="token keyword">in</span> <span class="token builtin">reversed</span><span class="token punctuation">(</span>classes<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        bpy<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>unregister_class<span class="token punctuation">(</span>cls<span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">"__main__"</span><span class="token punctuation">:</span>
+    register<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        </div>
+          
+        <div class="top-div">
+          <ol class="top-box"><li class="top-box-item top-box-level-1"><a class="top-box-link" href="#%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98"><span class="top-box-text">解决问题</span></a></li><li class="top-box-item top-box-level-1"><a class="top-box-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="top-box-text">使用方法</span></a></li><li class="top-box-item top-box-level-1"><a class="top-box-link" href="#%E4%B8%8B%E8%BD%BD"><span class="top-box-text">下载</span></a></li></ol>
+        </div>
+          
+      </div>
+    </div>
+
+    
+      <div class="next-post">
+        <a class="purple-link" href="/2025/02/09/Win11%E6%9B%B4%E6%96%B0%E5%90%8E%E9%BB%91%E5%B1%8F/">
+          <h3 class="post-title">
+            下一篇：Win11更新后黑屏，仅鼠标能操作，无法呼出任务管理器的解决方案
+          </h3>
+        </a>
+      </div>
+    
+  </div>
+
+
+
+
+
+
+
+
+
+
+<footer>
+<div class="site-footer">
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  
+    Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> <a href="https://github.com/f-dong/hexo-theme-minimalism" target="_blank">Theme</a>
+  
+  
+  
+  
+  
+  
+  
+    
+     |
+    
+      <a href="mailto:k4n1@qq.com" target="_blank">联系方式:k4n1@qq.com</a>
+  
+  
+</div>
+</footer>
+
+
+      </div>
+    </div>
+    
+<script id="hexo-configurations"> window.theme_config = {"image":{"lazyload_enable":true,"photo_zoom":"simple-lightbox"}}; window.is_post = true; </script>
+
+<script src="/js/main.js"></script>
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2J8GPGR6LT"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-2J8GPGR6LT');
+    </script>
+
+
+
+
+
+  <script src="/js/jquery.min.js"></script><script src="/js/jquery.fancybox.min.js"></script></body>
+</html>
+
